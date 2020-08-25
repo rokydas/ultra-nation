@@ -1,0 +1,13 @@
+.country-box img{
+    width: 100px;
+}
+
+.country-box{
+    border: 2px solid teal;
+    float: left;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    margin: 10px;
+    border-radius: 10px;
+}
