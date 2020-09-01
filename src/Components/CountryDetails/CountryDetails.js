@@ -5,21 +5,23 @@ import Country from '../Country/Country';
 const CountryDetails = () => {
     const {countryName} = useParams();
 
-    const [ countryDetails, setCountryDetails ] = useState([])
+    const [ countryDetails, setCountryDetails ] = useState({})
 
     useEffect( () => {
-        fetch(`https://restcountries.eu/rest/v2/all`)
+        fetch(`https://restcountries.eu/rest/v2/name/${countryName}`)
         .then(res => res.json())
-        .then(data => setCountryDetails(data))
+        .then(data => setCountryDetails(data[0]))
     }, [])
     
+    console.log(countryDetails);
+    const {name, capital, population} = countryDetails;
     
     
     return (
         <div>
-            {
-                countryDetails.map(country => <Country></Country>)
-            }
+            <h3>Details of {name}</h3>
+            <p>Capital: {capital}</p>
+            <p>Population: {population}</p>
         </div>
     );
 };
