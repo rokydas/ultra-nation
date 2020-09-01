@@ -1,40 +1,35 @@
 import React from 'react';
 import './App.css';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import Country from './Components/Country/Country';
+import Home from './Components/Home/Home';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import CountryDetails from './Components/CountryDetails/CountryDetails';
+import NotFound from './Components/NotFound/NotFound';
 
 function App() {
-  const handleAddCountry = (country) => {
-    // console.log(country.name, 'is added');
-    const newAddedCountry = [...addedCountry, country];
-    setAddedCountry(newAddedCountry);
-  };
-
-  const [countries, setCountries] = useState([]);
-  const [addedCountry, setAddedCountry] = useState([]);
-
-  useEffect(()=>{
-    fetch('https://restcountries.eu/rest/v2/all')
-    .then(res => res.json())
-    .then(data => setCountries(data))
-    .catch(error => console.log(error))
-  }, [])
-
+  
   return (
     <div className="main">
-      <h1>Countries data loaded: {countries.length}</h1>
-      <h3>Countries added: {addedCountry.length}</h3>
-      {/* <ul>
-        {
-          countries.map(country => <li>{country.name}</li>)
-        }
-      </ul> */}
-      <div className="countries-box">
-        {
-          countries.map(country => <Country handleAddCountry={handleAddCountry} info={country} key={country.alpha3Code}></Country>)
-        }
-      </div>
+      <Router>
+      <Switch>
+          <Route path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/details/:countryName">
+            <CountryDetails></CountryDetails>
+          </Route>
+          <Route path="/*">
+            <NotFound />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
